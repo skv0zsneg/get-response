@@ -1,7 +1,7 @@
 import setuptools
 
 
-VERSION = '0.0.1'
+VERSION = '0.0.2'
 NAME = 'get_response'
 AUTHOR = 'skvozsneg'
 
@@ -13,12 +13,12 @@ setuptools.setup(
     name=NAME,
     version=VERSION,
     author=AUTHOR,
-    description="Api response tool for easy parsing REST and SOAP API responses.",
+    description="Get response tool for easy parsing REST and SOAP API responses.",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
-    url="https://github.com/skvozsneg/api-response",
+    url="https://github.com/skvozsneg/get-response",
     project_urls={
-        "Bug Tracker": "https://github.com/skvozsneg/api-response/issues",
+        "Bug Tracker": "https://github.com/skvozsneg/get-response/issues",
     },
     classifiers=[
         "Programming Language :: Python :: 3",
@@ -27,5 +27,5 @@ setuptools.setup(
     ],
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
-    python_requires=">=3.6",
+    python_requires=">=3.8",
 )
