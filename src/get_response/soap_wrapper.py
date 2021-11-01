@@ -1,0 +1,3 @@
+class SoapWrapper:
+    def __init__(self):
+        ...

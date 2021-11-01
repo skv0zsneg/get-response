@@ -1,0 +1,2 @@
+class WrongApiType(BaseException):
+    pass

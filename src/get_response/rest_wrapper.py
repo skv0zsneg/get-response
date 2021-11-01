@@ -1,0 +1,3 @@
+class RestWrapper:
+    def __init__(self):
+        ...
