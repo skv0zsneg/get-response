@@ -1,7 +1,7 @@
 from requests import Response
 from typing import Union, Literal
 
-from .get_response import ApiWrapper
+from .api_wrapper import ApiWrapper
 
 
 API_TYPES = Literal['REST', 'SOAP']
