@@ -1,5 +1,5 @@
 from requests import Response
-from typing import Union, Literal, TypeVar
+from typing import Union, Callable
 
 from .core.enums import ApiType
 from .core.exceptions import WrongApiType
@@ -8,12 +8,8 @@ from .rest_wrapper import RestWrapper
 from .soap_wrapper import SoapWrapper
 
 
-T = TypeVar('T')
-API_TYPES = Literal[ApiType.REST, ApiType.SOAP]
-
-
 def get_response(obj: Union[Response, str, dict],
-                 api_type: Union[API_TYPES, str],
+                 api_type: Union[ApiType, str],
                  to_find: dict) -> ApiWrapper:
     """Get Response used for getting parsed SOAP or REST like response
     to a python dict-view.
@@ -23,11 +19,12 @@ def get_response(obj: Union[Response, str, dict],
     :param to_find: Search dict.
     :return: An Instance of ApiWrapper class.
     """
+    current_wrapper: Callable[..., ApiWrapper]
     current_wrapper = _get_api_wrapper(api_type)
     return current_wrapper(obj, to_find)
 
 
-def _get_api_wrapper(target: Union[API_TYPES, str]) -> T:
+def _get_api_wrapper(target: Union[ApiType, str]) -> Callable[..., ApiWrapper]:
     _type_map = {
         ApiType.REST: RestWrapper,
         ApiType.SOAP: SoapWrapper

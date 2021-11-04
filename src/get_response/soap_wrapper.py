@@ -1,3 +1,5 @@
-class SoapWrapper:
-    def __init__(self):
-        ...
+from .api_wrapper import ApiWrapper
+
+
+class SoapWrapper(ApiWrapper):
+    ...

@@ -1,3 +1,5 @@
-class RestWrapper:
-    def __init__(self):
-        ...
+from .api_wrapper import ApiWrapper
+
+
+class RestWrapper(ApiWrapper):
+    ...
