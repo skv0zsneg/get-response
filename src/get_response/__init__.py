@@ -8,7 +8,7 @@ from .rest_wrapper import RestWrapper
 from .soap_wrapper import SoapWrapper
 
 
-def get_response(obj: Union[Response, str, dict],
+def get_response(obj: Union[Response, str],
                  api_type: Union[ApiType, str],
                  to_find: dict) -> ApiWrapper:
     """Get Response used for getting parsed SOAP or REST like response
