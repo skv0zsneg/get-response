@@ -6,7 +6,7 @@ SIMPLE_REST_RESPONSE = """
     "family": {
         "mother": "Jane",
         "father": "Sam",
-        "Sister": null,
+        "Sister": null, 
         "cat": "ツ"
     }
 }
