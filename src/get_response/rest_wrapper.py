@@ -1,5 +1,5 @@
 import json
-from typing import Optional
+from typing import Optional, Union
 
 from .api_wrapper import ApiWrapper
 
@@ -16,6 +16,17 @@ class RestWrapper(ApiWrapper):
     def _parse(cls, obj_for_parse: dict, to_find_road: list) -> Optional[str]:
         ...
 
-
-
-
+    @classmethod
+    def _parse_one(cls, obj_for_parse: dict, to_find_field: str) -> Union[str, dict, list, None]:
+        item: Union[str, dict, list, None] = None
+        try:
+            return obj_for_parse[to_find_field]
+        except KeyError:
+            for value in obj_for_parse.values():
+                if isinstance(value, dict):
+                    item = cls._parse_one(value, to_find_field)
+                if isinstance(value, list):
+                    for list_value in value:
+                        if isinstance(list_value, dict):
+                            item = cls._parse_one(list_value, to_find_field)
+        return item
