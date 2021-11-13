@@ -8,13 +8,9 @@ from .rest_wrapper import RestWrapper
 from .soap_wrapper import SoapWrapper
 
 
-_R_TYPE = Type[Union[RestWrapper,
-                     SoapWrapper]]
-
-
 def get_response(obj: Union[Response, str],
                  api_type: Union[ApiType, str],
-                 to_find: dict) -> _R_TYPE:
+                 to_find: dict) -> ApiWrapper:
     """Get Response used for getting parsed SOAP or REST like response
     to a python dict-view.
 
@@ -25,10 +21,11 @@ def get_response(obj: Union[Response, str],
     """
     current_wrapper: ApiWrapper
     current_wrapper = _get_api_wrapper_instance(api_type, obj, to_find)
+    current_wrapper.parse_response()
     return current_wrapper
 
 
-def _get_api_wrapper_instance(target: Union[ApiType, str], *args, **kwargs) -> _R_TYPE:
+def _get_api_wrapper_instance(target: Union[ApiType, str], *args, **kwargs) -> ApiWrapper:
     _type_map = {
         ApiType.REST: RestWrapper,
         ApiType.SOAP: SoapWrapper

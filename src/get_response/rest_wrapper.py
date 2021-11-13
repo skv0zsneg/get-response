@@ -1,20 +1,21 @@
 import json
-from typing import Optional, Union
+from typing import Union, Generator
 
 from .api_wrapper import ApiWrapper
 
 
 class RestWrapper(ApiWrapper):
-    def parse_rest_response(self) -> None:
-        obj_for_parse = json.load(self.cur_obj)
+    def parse_response(self) -> None:
+        obj_for_parse = json.loads(self.cur_obj)
         for field_name, to_find_road in self.to_find.items():
-            parse_result = self._parse(obj_for_parse, to_find_road)
-            self.founded.update({field_name: parse_result})
-            exec(f"RestWrapper.{field_name} = '{parse_result}'")
+            for parse_result in self._parse(obj_for_parse, to_find_road):
+                self.founded.update({field_name: parse_result})
 
     @classmethod
-    def _parse(cls, obj_for_parse: dict, to_find_road: list) -> Optional[str]:
-        ...
+    def _parse(cls, obj_for_parse: dict,
+               to_find_road: list) -> Generator[Union[str, dict, list, None], None, None]:
+        for to_find_field in to_find_road:
+            yield cls._parse_one(obj_for_parse, to_find_field)
 
     @classmethod
     def _parse_one(cls, obj_for_parse: dict, to_find_field: str) -> Union[str, dict, list, None]:

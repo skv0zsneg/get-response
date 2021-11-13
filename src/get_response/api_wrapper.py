@@ -11,8 +11,9 @@ class ApiWrapper:
     def __getitem__(self, item):
         return self.founded[item]
 
-    def get_raw_obj(self):
-        return self.cur_obj
+    def get_raw_obj(self): ...
+
+    def parse_response(self): ...
 
     @staticmethod
     def _get_current_obj(obj: Union[Response, str]) -> str:
