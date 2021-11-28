@@ -34,6 +34,9 @@ def _get_api_wrapper_instance(target: Union[ApiType, str], *args, **kwargs) -> A
         if key.api_name == target:
             return _type_map[key](*args, **kwargs)
     try:
-        return _type_map[target](*args, **kwargs)
+        if isinstance(target, ApiType):
+            return _type_map[target](*args, **kwargs)
+        else:
+            raise KeyError
     except KeyError:
         raise WrongApiType(f"The value '{target}' is not the API type.") from None
