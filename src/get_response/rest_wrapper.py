@@ -12,7 +12,8 @@ class RestWrapper(ApiWrapper):
                 self.founded.update({field_name: parse_result})
 
     @classmethod
-    def _parse(cls, obj_for_parse: dict,
+    def _parse(cls,
+               obj_for_parse: dict,
                to_find_road: list) -> Generator[Union[str, dict, list, None], None, None]:
         for to_find_field in to_find_road:
             yield cls._parse_one(obj_for_parse, to_find_field)

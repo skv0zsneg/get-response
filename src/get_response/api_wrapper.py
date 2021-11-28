@@ -8,7 +8,7 @@ class ApiWrapper:
         self.to_find = to_find
         self.founded: dict = {}
 
-    def __getitem__(self, item):
+    def __getitem__(self, item) -> dict:
         return self.founded[item]
 
     def get_raw_obj(self): ...
