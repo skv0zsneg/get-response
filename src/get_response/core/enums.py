@@ -2,7 +2,7 @@ from enum import Enum
 from typing import Union, List
 
 
-class ApiType(Enum):
+class ResponseType(Enum):
     SOAP = ('SOAP', ['<', '>'])
     REST = ('REST', ['{', '}'])
 
@@ -18,4 +18,4 @@ class ApiType(Enum):
 
     @classmethod
     def get_all_api_names(cls) -> List[str]:
-        return list(map(lambda api_type: api_type.api_name, ApiType))
+        return list(map(lambda api_type: api_type.api_name, ResponseType))
