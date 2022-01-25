@@ -1,21 +1,16 @@
 from enum import Enum
-from typing import Union, List
+from typing import Union, List, Literal
 
 
 class ResponseType(Enum):
-    SOAP = ('SOAP', ['<', '>'])
-    REST = ('REST', ['{', '}'])
+    XML = ('xml', ['<', '>'])
+    JSON = ('json', ['{', '}'])
 
-    def __init__(self, api_name: str, salt: Union[List[str], str]):
-        """API types enum for detecting API response
-        which need to be parsed.
+    def __init__(self, response_type_name: str, salt: Union[List[str], str]):
+        """Response types enum.
 
-        :param api_name: Name of API response.
+        :param response_type_name: Name of API response.
         :param salt: Salt of API response.
         """
-        self.api_name = api_name
+        self.response_type_name = response_type_name
         self.salt = salt
-
-    @classmethod
-    def get_all_api_names(cls) -> List[str]:
-        return list(map(lambda api_type: api_type.api_name, ResponseType))

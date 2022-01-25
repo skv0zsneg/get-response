@@ -1,5 +1,6 @@
 from collections import UserDict
 
 
-class ParsedWrapper(UserDict):
-    ...
+class GetResponseDict(UserDict):
+    def _get_response_attrs(self):
+        ...
