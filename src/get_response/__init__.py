@@ -1,34 +1,60 @@
 from requests import Response
-from typing import Union, Optional
+from typing import Union, Type, Optional, Dict, List
 
-from .core.enums import ResponseType
-from .core.interface import GetResponseDict
-from .parsing_xml import ParsingXml
-from .parsing_json import ParsingJson
+from get_response.core.enums import ResponseType
+from get_response.core.exceptions import WrongResponseType
+from get_response.parsing_wrapper import ParsingWrapper
+from get_response.parsing_xml import ParsingXml
+from get_response.parsing_json import ParsingJson
+
+
+__all__ = ['get_response', 'ResponseType']
 
 
 def get_response(obj: Union[Response, bytes, str],
                  *,
-                 to_find: GetResponseDict,
-                 response_type: ResponseType = None) -> GetResponseDict:
+                 to_find: Dict[str, List[str]],
+                 response_type: ResponseType = None) -> ParsingWrapper:
+    """Main function to run parsing the response object.
+    
+    :param obj: The object that need to be parsed.
+    :param to_find: Special dict for parsing something specific.
+    :param response_type: Explicit indication of response type.
+    
+    Example.
+    >>> json_response = '{"pi_number": 3.14, "pi_mantissa": 14}'
+    >>> find_matnissa = {'parsed_pi_mantissa': ['pi_mantissa']}
+    >>> res = get_response(json_response, to_find=find_matnissa)
+    >>> res['parsed_pi_mantissa']
+    '14'
+    """
+    cur_parser: Optional[Type]
+
     if isinstance(obj, Response):
         obj = obj.text
     elif isinstance(obj, bytes):
         obj = obj.decode('utf-8')
 
-    cur_response_type = _get_parsing_method(response_type, obj)
-
-
-def _get_parsing_method(response_type: Optional[ResponseType], obj: str) -> Union[ParsingXml, ParsingJson]:
-    # TODO: закончить выбор парсера
-    parsed_method_map = {
-        ResponseType.XML: ParsingXml,
-        ResponseType.JSON: ParsingJson
-    }
     if response_type is not None:
-        cur_response_type = parsed_method_map[response_type]
+        parse_map = {
+            ResponseType.JSON: ParsingJson,
+            ResponseType.XML: ParsingXml
+        }
+        cur_parser = parse_map[response_type]
     else:
-        for target_response_type in ResponseType:
-            # For xml & json
-            if obj.startswith(target_response_type.salt[0]) and obj.endswith(target_response_type.salt[1]):
-                return parsed_method_map[target_response_type]
+        cur_parser = get_parser(obj)
+        if cur_parser is None:
+            raise WrongResponseType(WrongResponseType.MESSAGE)
+
+    parsed_object = cur_parser(obj, to_find)
+    parsed_object.parse()
+
+    return parsed_object
+
+
+def get_parser(obj: str) -> Optional[Type]:
+    if obj.startswith(ResponseType.JSON.salt[0]) and obj.endswith(ResponseType.JSON.salt[1]):
+        return ParsingJson
+    if obj.startswith(ResponseType.XML.salt[0]) and obj.endswith(ResponseType.XML.salt[1]):
+        return ParsingXml
+    return None
