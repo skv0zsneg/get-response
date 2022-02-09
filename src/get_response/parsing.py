@@ -4,8 +4,9 @@ from typing import Any
 
 @dataclass
 class Parsing:
-    parsed_obj: Any
-    cache: Any
+    road_to_parsed_obj: Any
+    parsed_obj: Any = None
+    cache: Any = None
 
     def get_obj(self) -> Any:
         pass
