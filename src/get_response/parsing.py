@@ -1,10 +1,12 @@
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Union
+from requests import Response
 
 
 @dataclass
 class Parsing:
-    road_to_parsed_obj: Any
+    obj: Union[Response, str]
+    road_to_obj: Any
     parsed_obj: Any = None
     cache: Any = None
 
