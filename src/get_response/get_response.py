@@ -3,7 +3,7 @@ from typing import Union, Dict, Any, List, Optional
 from requests import Response
 import get_response.parsing_mime as parsing
 from get_response.core.mime_type_enum import MimeTypeEnum
-from get_response.core.gr_exceptions import CannotDetectMimeType, UnexpectedMimeType
+from get_response.core.gr_exceptions import CannotDetectMimeType
 
 
 @dataclass
@@ -17,10 +17,8 @@ class GetResponse:
 
     def __getitem__(self, item: Any) -> Any:
         if isinstance(self.mime_type, str):
-            return parsing.MIME_TYPE_MAP[self.mime_type](
-                self.obj,
-                self.to_find[item]
-            )
+            return parsing.MIME_TYPE_MAP[self.mime_type](self.obj,
+                                                         self.to_find[item])
 
     def get_raw(self) -> Union[Response, str]:
         return self.obj
