@@ -21,8 +21,8 @@ class GetResponse(object):
     you need to get. For example if you want to get object `id` from json file:
 
     {
-    "id": "fehhad342effe28991afe2",
-    "author": "skvozsneg"
+        "id": "fehhad342effe28991afe2",
+        "author": "skvozsneg"
     }
 
     You need to create instance of class GetResponse and give to it:
