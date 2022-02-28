@@ -1,3 +1,4 @@
+import json
 from typing import Any
 
 from get_response.parsing import Parsing
@@ -6,4 +7,3 @@ from get_response.parsing import Parsing
 class ParsingApplicationJson(Parsing):
     def get_obj(self) -> Any:
         pass
-

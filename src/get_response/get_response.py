@@ -68,8 +68,9 @@ class GetResponse(object):
             Any type that have been parsed.
         """
         if isinstance(self.mime_type, enums.MimeTypeEnum):
-            return parsing.MIME_TYPE_MAP[self.mime_type](self.obj,
-                                                         self.to_find[item])
+            cur_method = parsing.MIME_TYPE_MAP[self.mime_type](self.obj,
+                                                               self.to_find[item])
+            return cur_method.get_obj()
 
     def get_raw(self) -> Union[requests.Response, str]:
         """Getting the raw object."""
