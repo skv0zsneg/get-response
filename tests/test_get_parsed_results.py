@@ -1,6 +1,6 @@
 import pytest
 
-from get_response import get_json
+from src.get_response import get_json
 
 
 class TestGetJsonParsed:
@@ -126,7 +126,7 @@ class TestGetJsonParsed:
         assert 2 in result_all_childrens
 
     
-    def test_get_only_str_values_using_magic_method__getitem__(json_message):
+    def test_get_only_int_values_using_magic_method__getitem__(json_message):
         result = get_json(
             obj=json_message,
             to_find={
@@ -144,3 +144,7 @@ class TestGetJsonParsed:
         assert 0 in result_all_childrens
         assert 2 in result_all_childrens
 
+    def test_get_only_bool_values(json_message):
+        # TODO: finish tests
+        pass
+    
