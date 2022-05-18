@@ -1,10 +1,10 @@
 from abc import ABC
 from abc import abstractmethod
 import json
-from typing import Any, Optional, List
+from typing import Any, Tuple
 
 
-T_GET_OBJECTS = List[Optional[Any]]
+T_GET_OBJECTS = Tuple[Any]
 
 
 class BaseParser(ABC):
@@ -14,19 +14,18 @@ class BaseParser(ABC):
         self.obj = obj
 
     @abstractmethod
-    def get_objects(self, item: str, obj: Any = None) -> T_GET_OBJECTS:
+    def get_objects(self, field: str) -> T_GET_OBJECTS:
         """Method parsing the object and return what he found by given
         key.
 
-        Method get object and trying to found in it value that exist in
-        it by the given key.
+        Method get object and trying to found in it values that exist
+        in it by the given key.
 
         Args:
-            obj: Object that will be parsed.
-            item: String - field which value must be found.
+            field: Field which value must be found.
 
         Returns:
-            List[Optional[Any]]: Method return a found values or None if 
+            Tuple[Any]: Method return a found values or empty tuple if 
              searching are failed. 
         """
         pass
@@ -38,25 +37,23 @@ class JsonParser(BaseParser):
         super().__init__(obj)
         self._obj_dict = json.loads(self.obj)
 
-    def get_objects(self, field: str, obj: dict = None) -> T_GET_OBJECTS:
-        # TODO: избавиться от рекурсии!!!
+    def get_objects(self, field: str) -> T_GET_OBJECTS:
+        """Parsing a serialized to dict json object."""
+        dicts_queue = [self._obj_dict,]
         fields_found = []
 
-        for key, value in self._obj_dict.items():
+        for dictionary in dicts_queue:
+            for key, value in dictionary.items():
 
-            if key == field:
-                fields_found.append(value)
+                if key == field:
+                    fields_found.append(value)
 
-            elif isinstance(value, dict):
-                results = self.get_objects(field, value)
-                for result in results:
-                    fields_found.append(result)
+                elif isinstance(value, dict):
+                    dicts_queue.append(value)
 
-            elif isinstance(value, list):
-                for item in value:
-                    if isinstance(item, dict):
-                        more_results = self.get_objects(field, item)
-                        for another_result in more_results:
-                            fields_found.append(another_result)
-
-        return fields_found
+                elif isinstance(value, list):
+                    for item in value:
+                        if isinstance(item, dict):
+                            dicts_queue.append(item)
+        
+        return tuple(fields_found)
