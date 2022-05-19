@@ -2,9 +2,10 @@ from abc import ABC
 from abc import abstractmethod
 import json
 from typing import Any, Tuple
+import xml.etree.ElementTree as ET
 
 
-T_GET_OBJECTS = Tuple[Any]
+T_GET_OBJECTS = Tuple[Any, ...]
 
 
 class BaseParser(ABC):
@@ -55,5 +56,18 @@ class JsonParser(BaseParser):
                     for item in value:
                         if isinstance(item, dict):
                             dicts_queue.append(item)
+                        if isinstance(item, list):
+                            value.extend(item)
         
         return tuple(fields_found)
+
+
+class XmlParser(BaseParser):
+
+    def __init__(self, obj: str) -> None:
+        super().__init__(obj)
+        self._obj_xml = ET.fromstring(obj)
+
+    def get_objects(self, field: str) -> T_GET_OBJECTS:
+        """Parsing a serialized by ElementTree object."""
+        pass

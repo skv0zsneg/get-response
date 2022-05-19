@@ -9,33 +9,48 @@ class TestGetJsonParsed:
     def parse_result(self):
         message = """
         {
-            "page": 20,
-            "time": "2022-05-15T15:43:00Z",
-            "persons": [
+            "page":20,
+            "time":"2022-05-15T15:43:00Z",
+            "persons":[
                 {
-                    "id": "abfa0c8a986bcabca9ba6c96a9",
-                    "name": "Alex",
-                    "surname": "Bernard",
-                    "n_childrens": 15165136521356416541651,
-                    "married": false,
-                    "books": ["The Great Gatsby", "Another Book"]
+                    "id":"abfa0c8a986bcabca9ba6c96a9",
+                    "name":"Alex",
+                    "surname":"Bernard",
+                    "n_childrens":15165136521356416541651,
+                    "married":false,
+                    "books":[
+                        "The Great Gatsby",
+                        "Another Book"
+                    ]
                 },
                 {
-                    "id": "abfa0c8a986bcabca9ba890bbc",
-                    "name": "Vikki",
-                    "surname": "Sweet",
-                    "n_childrens": 0,
-                    "married": true,
-                    "books": null
+                    "id":"abfa0c8a986bcabca9ba890bbc",
+                    "name":"Vikki",
+                    "surname":"Sweet",
+                    "n_childrens":0,
+                    "married":true,
+                    "books":null
                 },
                 {
-                    "id": "abfa0c8a986bcabca9ba890123",
-                    "name": "Lily",
-                    "surname": "Sunshine",
-                    "n_childrens": 2,
-                    "married": true,
-                    "books": []
+                    "id":"abfa0c8a986bcabca9ba890123",
+                    "name":"Lily",
+                    "surname":"Sunshine",
+                    "n_childrens":2,
+                    "married":true,
+                    "books":[]
                 }
+            ],
+            "deep_list":[
+                [
+                    [],
+                    [],
+                    [
+                        [],
+                        [{"hide_value": "IAmVerySecret"}]
+                    ]
+                ],
+                [],
+                []
             ]
         }
         """
@@ -91,16 +106,86 @@ class TestGetJsonParsed:
         assert page_result == (20,)
 
     def test_get_time_value(self, parse_result):
-        page_result = parse_result.get_objects('time')
+        time_result = parse_result.get_objects('time')
 
-        assert page_result == ('2022-05-15T15:43:00Z',)
+        assert time_result == ('2022-05-15T15:43:00Z',)
+    
+    def test_get_hide_value_value(self, parse_result):
+        hide_result = parse_result.get_objects('hide_value')
 
+        assert hide_result == ("IAmVerySecret",)
 
     def test_get_value_using_nonexistent_field(self, parse_result):
         parsing_result = parse_result.get_objects('nonexistent')
 
         assert parsing_result == ()
 
-    def test_get_value_using_nonexistent_field(self, parse_result):
+    def test_get_value_using_empty_field(self, parse_result):
         with pytest.raises(TypeError):
             parse_result.get_objects()
+
+
+class TestGetXmlParsed:
+
+    @pytest.fixture()
+    def parse_result(self):
+        message = """
+            <soap:Envelope xmlns:soap="http://">
+            <soap:Header>
+                <ResponseHeader xmlns="https://">
+                    <requestId>xxxxxxxxxxxxxxxxxxxx</requestId>
+                    <responseTime>1063</responseTime>
+                </ResponseHeader>
+            </soap:Header>
+            <soap:Body>
+                <getAdUnitsByStatementResponse xmlns="https://">
+                    <persons>
+                        <person>
+                            <id>abfa0c8a986bcabca9ba6c96a9</id>
+                            <name>Alex</name>
+                            <surname>Bernard</surname>
+                            <nChildrens>15165136521356416541651</nChildrens>
+                            <married>False</married>
+                            <books>
+                                <bookName>The Great Gatsby</bookName>
+                                <bookName>Another Book</bookName>
+                            </books>
+                        </person>
+                        <person>
+                            <id>abfa0c8a986bcabca9ba890bbc</id>
+                            <name>Vikki</name>
+                            <surname>Sweet</surname>
+                            <nChildrens>0</nChildrens>
+                            <married>True</married>
+                            <books></books>
+                        </person>
+                        <person>
+                            <id>abfa0c8a986bcabca9ba890123</id>
+                            <name>Lily</name>
+                            <surname>Sunshine</surname>
+                            <nChildrens>2</nChildrens>
+                            <married>True</married>
+                            <books>
+                                <bookName></bookName>
+                            </books>
+                        </person>
+                    </persons>
+                </getAdUnitsByStatementResponse>
+            </soap:Body>
+            </soap:Envelope>
+        """
+        parsed_json = get_response(
+            obj=message, 
+            message_type='xml')
+
+        yield parsed_json
+    
+    def test_get_all_id_values(self, parse_result):
+        all_ids_result = parse_result.get_objects('id')
+        
+        assert len(all_ids_result) == 3
+        assert all_ids_result == ('abfa0c8a986bcabca9ba6c96a9', 
+                                  'abfa0c8a986bcabca9ba890bbc', 
+                                  'abfa0c8a986bcabca9ba890123')
+    
+
