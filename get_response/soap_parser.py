@@ -16,12 +16,12 @@ class SoapParser(BaseParser):
         """Parsing a serialized by ElementTree object."""
         fields_found = []
 
-        for childrens in self._obj_xml.iter():
-            current_tag = childrens.tag
+        for children in self._obj_xml.iter():
+            current_tag = children.tag
             tag_name = current_tag[current_tag.find('}') + 1::]
 
             if tag_name == field:
-                for text in childrens.itertext():
+                for text in children.itertext():
                     print(repr(text))
                     fields_found.append(text)
 
