@@ -26,9 +26,8 @@ class SoapParser(BaseParser):
                     fields_found.append(text)
 
         return tuple(fields_found)
-    
+
     @staticmethod
     def _prepare_obj(obj: str) -> str:
         result = re.sub(r">(?:\W+)<", r"><", obj)
         return result.strip()
-    

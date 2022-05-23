@@ -23,7 +23,7 @@ class BaseParser(ABC):
             field: Field which value must be found.
 
         Returns:
-            Tuple[Any]: Method return a found values or empty tuple if 
-             searching are failed. 
+            Tuple[Any]: Method return a found values or empty tuple if
+             searching are failed.
         """
         pass
