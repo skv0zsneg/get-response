@@ -4,7 +4,8 @@ import setuptools
 VERSION = '0.1.0'
 NAME = 'get_response'
 AUTHOR = 'skv0zsneg'
-DESCRIPTION = "Parsing Tool for json-like, xml-like and etc Types of Response for Humans."
+DESCRIPTION = ("Parsing Tool for json-like, xml-like and etc Types of Response"
+               "for Humans.")
 
 with open("README.md", "r", encoding="utf-8") as fh:
     LONG_DESCRIPTION = fh.read()

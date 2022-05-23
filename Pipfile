@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 tox = "*"
+flake8 = "*"
 
 [dev-packages]
 
