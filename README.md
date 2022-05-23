@@ -1,6 +1,12 @@
-![PyPI](https://img.shields.io/pypi/v/get-response)
-![CI status](https://github.com/skv0zsneg/get-response/actions/workflows/get-response-tox.yml/badge.svg)
-[![codebeat badge](https://codebeat.co/badges/6c135ed9-2c57-4ba3-980b-1bb9c9a2c83b)](https://codebeat.co/projects/github-com-skvozsneg-get-response-main)
+<div id="header" align="center">
+  <img src="https://github.com/skv0zsneg/get-response/blob/dev/docs/static/get-response-logo-transparent.png" width="600"/>
+</div>
+<div id="padges" align="center">
+   <img src="https://img.shields.io/pypi/v/get-response" alt="PyPi Badge"/>
+   <img src="https://github.com/skv0zsneg/get-response/actions/workflows/get-response-tox.yml/badge.svg" alt="CI Badge"/>
+   <img src="https://codebeat.co/badges/6c135ed9-2c57-4ba3-980b-1bb9c9a2c83b" alt="CI Badge"/>
+</div>
+
 # get-response
  Parsing Tool for json-like, xml-like and etc Types of Response for Humans.
  
