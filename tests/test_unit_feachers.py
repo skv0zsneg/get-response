@@ -1,6 +1,6 @@
 import pytest
 
-from get_response.parsers import SoapParser
+from get_response.soap_parser import SoapParser
 
 
 class TestSoapParserMethods:

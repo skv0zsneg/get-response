@@ -1,9 +1,8 @@
 from typing import Literal
 
-from get_response.parsers import BaseParser
-from get_response.parsers import JsonParser
-from get_response.parsers import SoapParser
-
+from get_response.base_parser import BaseParser
+from get_response.json_parser import JsonParser
+from get_response.soap_parser import SoapParser
 
 T_MESSAGE = Literal['json', 'soap']
 
