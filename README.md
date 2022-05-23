@@ -1,19 +1,59 @@
-![PyPI](https://img.shields.io/pypi/v/get-response)
-![example workflow](https://github.com/skvozsneg/get-response/actions/workflows/get-response-tox.yml/badge.svg)
-[![codebeat badge](https://codebeat.co/badges/6c135ed9-2c57-4ba3-980b-1bb9c9a2c83b)](https://codebeat.co/projects/github-com-skvozsneg-get-response-main)
-# api-response
-Api response tool for easy parsing REST and SOAP responses.
+<div id="header" align="center">
+  <img src="https://github.com/skv0zsneg/get-response/blob/dev/docs/static/get-response-logo-transparent.png" width="600"/>
+</div>
+<div id="padges" align="center">
+   <img src="https://img.shields.io/pypi/v/get-response" alt="PyPi Badge"/>
+   <img src="https://github.com/skv0zsneg/get-response/actions/workflows/get-response-tox.yml/badge.svg" alt="CI Badge"/>
+   <img src="https://codebeat.co/badges/6c135ed9-2c57-4ba3-980b-1bb9c9a2c83b" alt="CI Badge"/>
+</div>
 
-___
-### Quick start
-```python
-import requests
-from get_response import get_response
+# get-response
+ Parsing Tool for json-like, xml-like and etc Types of Response for Humans.
+ 
+## Quick Start
+**Install**
 
-response = requests.get('https://your-api.com')
-gr = get_response(response, 
-                  'REST', 
-                  {'my_name': ['person', 'name']})
+```pip install get-response```
 
-gr['my_name']  # Contains value from JSON (...{'person': {'name': 'NAME'}}...)
+**Use**
 ```
+import get_response
+import requests
+
+
+response = requests.get("https://your-awesome-api.com/users")
+parser = get_response.get_json(response.text)
+
+parser.get_objects('name')
+# ('Alex', 'Sam', 'Jane', ... )
+```
+
+## Requirements 
+- Python >=3.8
+
+If you whant to do a pull request make sure that to using `mypy`,  `pytets` and `tox`. All versions described in `requirements_dev.txt`.
+
+## Summary
+This Python package is made for easy parsing data from messages that comes from API's. For example you have a REST API and you need to get all data from value 'id'. All you need to get raw json message and put it in `get_response.get_json()` and than call a `.get_objects('id')` method. Algorithm will go through json and return every value that corresponds to 'id' key.
+
+It can be used for tests or scrapping tasks.
+
+### Message types
+
+Package supports next types of message:
+- json
+- soap
+
+That package sets next methods for every type of messages:
+
+| Method | Message Types | Description |
+| --- | --- | --- |
+| `get_objects(key)` | `json`, `soap` | Return every found value in the message that corresponds to key. | 
+
+## Versions
+- v 0.1.0
+	- New structure of the project.
+	- Change goals and prospects of project.
+
+- v 0.0.2
+	- First version of the project.

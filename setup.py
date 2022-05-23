@@ -1,9 +1,10 @@
 import setuptools
 
 
-VERSION = '0.0.2'
+VERSION = '0.1.0'
 NAME = 'get_response'
-AUTHOR = 'skvozsneg'
+AUTHOR = 'skv0zsneg'
+DESCRIPTION = "Parsing Tool for json-like, xml-like and etc Types of Response for Humans."
 
 with open("README.md", "r", encoding="utf-8") as fh:
     LONG_DESCRIPTION = fh.read()
@@ -13,19 +14,19 @@ setuptools.setup(
     name=NAME,
     version=VERSION,
     author=AUTHOR,
-    description="Get response tool for easy parsing REST and SOAP API responses.",
+    description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
-    url="https://github.com/skvozsneg/get-response",
+    url="https://github.com/skv0zsneg/get-response",
     project_urls={
-        "Bug Tracker": "https://github.com/skvozsneg/get-response/issues",
+        "Bug Tracker": "https://github.com/skv0zsneg/get-response/issues",
     },
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    package_dir={"": "src"},
-    packages=setuptools.find_packages(where="src"),
+    package_dir={"": "get_response"},
+    packages=setuptools.find_packages(where="get_response"),
     python_requires=">=3.8",
 )
