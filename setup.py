@@ -1,7 +1,7 @@
 import setuptools
 
 
-VERSION = '0.1.0'
+VERSION = '0.1.2'
 NAME = 'get_response'
 AUTHOR = 'skv0zsneg'
 DESCRIPTION = ("Parsing Tool for json-like, xml-like and etc Types of Response"
@@ -27,7 +27,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    package_dir={"": "get_response"},
-    packages=setuptools.find_packages(where="get_response"),
+    package_dir={"": "src"},
+    packages=setuptools.find_packages(where="src"),
     python_requires=">=3.8",
 )
