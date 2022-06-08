@@ -1,5 +1,5 @@
 <div id="header" align="center">
-  <img src="https://github.com/skv0zsneg/get-response/blob/dev/docs/static/get-response-logo-transparent.png" width="600"/>
+  <img src="https://github.com/skv0zsneg/get-response/blob/dev/docs/source/_static/get-response-logo-transparent.png" width="600"/>
 </div>
 <div id="padges" align="center">
    <img src="https://img.shields.io/pypi/v/get-response" alt="PyPi Badge"/>
