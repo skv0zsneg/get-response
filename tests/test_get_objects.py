@@ -1,6 +1,5 @@
 import pytest
 
-
 from get_response import get_response
 
 
